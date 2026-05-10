@@ -1,0 +1,33 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - generic [ref=e4]:
+        - generic [ref=e5]: Builder Specification Form · Admin
+        - heading "All Builder Responses" [level=1] [ref=e6]
+      - link "+ New Response" [ref=e8] [cursor=pointer]:
+        - /url: /?id=aa3a3a99-93f1-4a73-977b-1388215482ab
+  - main [ref=e9]:
+    - generic [ref=e10]:
+      - generic [ref=e11]:
+        - generic [ref=e12]: Submissions overview
+        - heading "Builder responses & submissions" [level=2] [ref=e13]:
+          - text: Builder responses
+          - emphasis [ref=e14]: "& submissions"
+      - link "+ New Response" [ref=e15] [cursor=pointer]:
+        - /url: /?id=0f6384e4-2eec-40cc-b614-cdce339e7221
+    - generic [ref=e16]:
+      - generic [ref=e17]:
+        - generic [ref=e18]: Total Responses
+        - generic [ref=e19]: "0"
+      - generic [ref=e20]:
+        - generic [ref=e21]: Latest Saved
+        - generic [ref=e22]: —
+    - generic [ref=e23]:
+      - generic [ref=e24]:
+        - generic [ref=e25]: 0 responses
+        - textbox "Search by name or project…" [ref=e26]
+      - generic [ref=e28]:
+        - generic [ref=e29]: ¶
+        - paragraph [ref=e30]: No builder responses saved yet.
+        - link "+ Start New Response" [ref=e31] [cursor=pointer]:
+          - /url: /?id=ce0b723e-34b6-4775-a421-75a329b32e2d

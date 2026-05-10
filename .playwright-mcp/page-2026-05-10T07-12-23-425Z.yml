@@ -1,0 +1,212 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - generic [ref=e4]:
+        - generic [ref=e5]: Builder Specification Form · v1.0
+        - heading "Comprehensive Builder Questionnaire" [level=1] [ref=e6]
+      - generic [ref=e7]:
+        - generic [ref=e10]: Ready
+        - button "↓ Export JSON" [ref=e11] [cursor=pointer]
+        - button "⎙ Print" [ref=e12] [cursor=pointer]
+        - button "Reset" [ref=e13] [cursor=pointer]
+  - generic [ref=e15]:
+    - generic [ref=e16]: ¶
+    - generic [ref=e17]:
+      - strong [ref=e18]: Builder instructions —
+      - text: Fill every section clearly and write
+      - emphasis [ref=e19]: NA
+      - text: where not applicable. For brands, specify make, model/series, and grade. For dimensions, state unit and measurement basis. For pricing, declare quantity, unit, rate, taxes, transport, wastage, and labour inclusions. Clearly separate items that are included, excluded, optional, provisional, or owner-supplied. Your responses save automatically and you can navigate tabs in any order.
+  - tablist [ref=e21]:
+    - tab "01 Builder & Project" [ref=e22] [cursor=pointer]:
+      - generic [ref=e23]: "01"
+      - generic [ref=e24]: Builder & Project
+    - tab "02 Scope Matrix" [ref=e27] [cursor=pointer]:
+      - generic [ref=e28]: "02"
+      - generic [ref=e29]: Scope Matrix
+    - tab "03 Pre-Construction" [ref=e31] [cursor=pointer]:
+      - generic [ref=e32]: "03"
+      - generic [ref=e33]: Pre-Construction
+    - tab "04 Substructure" [ref=e35] [cursor=pointer]:
+      - generic [ref=e36]: "04"
+      - generic [ref=e37]: Substructure
+    - tab "05 Structure & Masonry" [ref=e39] [cursor=pointer]:
+      - generic [ref=e40]: "05"
+      - generic [ref=e41]: Structure & Masonry
+    - tab "06 Waterproofing & Roof" [ref=e43] [cursor=pointer]:
+      - generic [ref=e44]: "06"
+      - generic [ref=e45]: Waterproofing & Roof
+    - tab "07 Finishes" [ref=e47] [cursor=pointer]:
+      - generic [ref=e48]: "07"
+      - generic [ref=e49]: Finishes
+    - tab "08 Doors & Joinery" [ref=e51] [cursor=pointer]:
+      - generic [ref=e52]: "08"
+      - generic [ref=e53]: Doors & Joinery
+    - tab "09 Plumbing & Sanitary" [ref=e55] [cursor=pointer]:
+      - generic [ref=e56]: "09"
+      - generic [ref=e57]: Plumbing & Sanitary
+    - tab "10 Electrical & HVAC" [ref=e59] [cursor=pointer]:
+      - generic [ref=e60]: "10"
+      - generic [ref=e61]: Electrical & HVAC
+    - tab "11 External & Lifecycle" [ref=e63] [cursor=pointer]:
+      - generic [ref=e64]: "11"
+      - generic [ref=e65]: External & Lifecycle
+    - tab "12 Commercial" [ref=e67] [cursor=pointer]:
+      - generic [ref=e68]: "12"
+      - generic [ref=e69]: Commercial
+    - tab "13 QA, Schedule & Handover" [ref=e71] [cursor=pointer]:
+      - generic [ref=e72]: "13"
+      - generic [ref=e73]: QA, Schedule & Handover
+  - main [ref=e75]:
+    - generic [ref=e76]:
+      - generic [ref=e77]:
+        - generic [ref=e78]:
+          - generic [ref=e79]: Tab 01 of 13
+          - heading "Builder identity & project basis" [level=2] [ref=e80]:
+            - text: Builder identity &
+            - emphasis [ref=e81]: project basis
+        - generic [ref=e82]:
+          - text: 2 sections
+          - generic [ref=e83]: 4% filled
+      - generic [ref=e84]:
+        - generic [ref=e85]:
+          - generic [ref=e86]: "01"
+          - generic [ref=e88]: Builder identity and proposal basis
+        - generic [ref=e89]:
+          - generic [ref=e90]:
+            - generic [ref=e91]:
+              - text: Builder / Firm Name
+              - generic: "*"
+            - textbox [ref=e92]: Test Builder
+          - generic [ref=e93]:
+            - generic [ref=e94]:
+              - text: Contact Person
+              - generic: "*"
+            - textbox [ref=e95]
+          - generic [ref=e96]:
+            - generic [ref=e97]: Phone
+            - textbox [ref=e98]
+          - generic [ref=e99]:
+            - generic [ref=e100]: Email
+            - textbox [ref=e101]
+        - generic [ref=e102]:
+          - generic [ref=e103]: Office Address
+          - textbox [ref=e104]
+        - generic [ref=e105]:
+          - generic [ref=e106]:
+            - generic [ref=e107]: License / Registration Details
+            - textbox [ref=e108]
+          - generic [ref=e109]:
+            - generic [ref=e110]: GST / Tax Registration
+            - textbox [ref=e111]
+          - generic [ref=e112]:
+            - generic [ref=e113]: Years in Residential Construction
+            - spinbutton [ref=e114]
+          - generic [ref=e115]:
+            - generic [ref=e116]: Type of Contract Offered
+            - combobox [ref=e117]:
+              - option "— select —" [selected]
+              - option "Lump sum"
+              - option "Item rate"
+              - option "Cost plus"
+              - option "Labor only"
+              - option "Material plus labor"
+              - option "Other"
+        - generic [ref=e118]:
+          - generic [ref=e119]: Has this proposal been prepared based on reviewed drawings?
+          - generic [ref=e120]:
+            - generic [ref=e123] [cursor=pointer]: "Yes"
+            - generic [ref=e126] [cursor=pointer]: "No"
+        - generic [ref=e127]:
+          - generic [ref=e128]: Documents reviewed by builder
+          - generic [ref=e129]:
+            - generic [ref=e132] [cursor=pointer]: Architectural drawings
+            - generic [ref=e135] [cursor=pointer]: Structural drawings
+            - generic [ref=e138] [cursor=pointer]: Soil report
+            - generic [ref=e141] [cursor=pointer]: MEP drawings
+            - generic [ref=e144] [cursor=pointer]: Elevation drawings
+            - generic [ref=e147] [cursor=pointer]: Interior drawings
+            - generic [ref=e150] [cursor=pointer]: Approval drawings
+            - generic [ref=e153] [cursor=pointer]: Other
+        - generic [ref=e154]:
+          - generic [ref=e155]: Assumptions made while pricing
+          - textbox [ref=e156]
+          - generic [ref=e157]: List every assumption that materially affects price or scope.
+        - generic [ref=e158]:
+          - generic [ref=e159]: Items specifically excluded from this proposal
+          - textbox [ref=e160]
+        - generic [ref=e161]:
+          - generic [ref=e162]: Optional items quoted separately
+          - textbox [ref=e163]
+      - generic [ref=e164]:
+        - generic [ref=e165]:
+          - generic [ref=e166]: "02"
+          - generic [ref=e168]: Project summary
+        - generic [ref=e169]:
+          - generic [ref=e170]:
+            - generic [ref=e171]:
+              - text: Project Name
+              - generic: "*"
+            - textbox [ref=e172]
+          - generic [ref=e173]:
+            - generic [ref=e174]: Project Location
+            - textbox [ref=e175]
+          - generic [ref=e176]:
+            - generic [ref=e177]: Site Address / Survey No. / Plot No.
+            - textbox [ref=e178]
+          - generic [ref=e179]:
+            - generic [ref=e180]: Site Dimensions
+            - textbox [ref=e181]
+          - generic [ref=e182]:
+            - generic [ref=e183]: Road Width / Site Access Details
+            - textbox [ref=e184]
+          - generic [ref=e185]:
+            - generic [ref=e186]: Expected Building Type
+            - combobox [ref=e187]:
+              - option "— select —" [selected]
+              - option "Independent house"
+              - option "Duplex"
+              - option "Villa"
+              - option "Rental block"
+              - option "Other"
+          - generic [ref=e188]:
+            - generic [ref=e189]: Total Plot Area
+            - textbox [ref=e190]
+          - generic [ref=e191]:
+            - generic [ref=e192]: Total Proposed Built-up Area
+            - textbox [ref=e193]
+        - generic [ref=e194]:
+          - generic [ref=e195]: Number of Floors Covered in Quote
+          - generic [ref=e196]:
+            - generic [ref=e199] [cursor=pointer]: Stilt
+            - generic [ref=e202] [cursor=pointer]: Ground
+            - generic [ref=e205] [cursor=pointer]: First
+            - generic [ref=e208] [cursor=pointer]: Second
+            - generic [ref=e211] [cursor=pointer]: Third
+            - generic [ref=e214] [cursor=pointer]: Terrace
+            - generic [ref=e217] [cursor=pointer]: Other
+        - generic [ref=e218]:
+          - generic [ref=e219]: Measurement basis used for quotation
+          - combobox [ref=e220]:
+            - option "— select —" [selected]
+            - option "Plot area"
+            - option "Built-up area"
+            - option "Super built-up area"
+            - option "Carpet area"
+            - option "Item-wise quantity takeoff"
+            - option "Other"
+        - generic [ref=e221]:
+          - generic [ref=e222]:
+            - generic [ref=e223]: Expected project start date
+            - textbox [ref=e224]
+          - generic [ref=e225]:
+            - generic [ref=e226]: Expected completion period
+            - textbox [ref=e227]
+            - generic [ref=e228]: e.g. 14 months
+          - generic [ref=e229]:
+            - generic [ref=e230]: Validity of quotation
+            - textbox [ref=e231]
+            - generic [ref=e232]: e.g. 60 days from issue
+      - generic [ref=e233]:
+        - button "← Previous" [disabled] [ref=e234]
+        - generic [ref=e235]: Tab 01 / 13
+        - button "Next →" [ref=e236] [cursor=pointer]

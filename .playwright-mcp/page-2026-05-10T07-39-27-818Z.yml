@@ -1,0 +1,23 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - generic [ref=e4]:
+        - generic [ref=e5]: "Builder Specification Form · v1.0 · Session: c1394dd8…"
+        - heading "Comprehensive Builder Questionnaire" [level=1] [ref=e6]
+      - generic [ref=e7]:
+        - generic [ref=e10]: Loading…
+        - button "↓ Export JSON" [ref=e11] [cursor=pointer]
+        - button "⎙ Print" [ref=e12] [cursor=pointer]
+        - link "All Responses" [ref=e13] [cursor=pointer]:
+          - /url: /submissions
+        - button "+ New" [ref=e14] [cursor=pointer]
+        - button "Reset" [ref=e15] [cursor=pointer]
+  - generic [ref=e17]:
+    - generic [ref=e18]: ¶
+    - generic [ref=e19]:
+      - strong [ref=e20]: Builder instructions —
+      - text: Fill every section clearly and write
+      - emphasis [ref=e21]: NA
+      - text: where not applicable. For brands, specify make, model/series, and grade. For dimensions, state unit and measurement basis. For pricing, declare quantity, unit, rate, taxes, transport, wastage, and labour inclusions. Clearly separate items that are included, excluded, optional, provisional, or owner-supplied. Your responses save automatically and you can navigate tabs in any order.
+  - tablist [ref=e23]
+  - main [ref=e24]
