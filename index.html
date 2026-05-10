@@ -1,0 +1,1917 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Builder Questionnaire & Specification Response Form</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1c1a17;
+    --ink-soft: #3a352d;
+    --paper: #f4ede0;
+    --paper-deep: #ebe2cf;
+    --card: #fdfaf3;
+    --rule: #c9bfa8;
+    --rule-soft: #ddd2b8;
+    --accent: #b8542a;
+    --accent-deep: #8a3e1e;
+    --muted: #756c5b;
+    --good: #4a7a3f;
+    --shadow: 0 1px 0 rgba(28,26,23,.04), 0 12px 24px -16px rgba(28,26,23,.18);
+    --shadow-sm: 0 1px 0 rgba(28,26,23,.04), 0 4px 8px -4px rgba(28,26,23,.12);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: 'IBM Plex Sans', system-ui, sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.55;
+    background-image:
+      radial-gradient(circle at 12% 8%, rgba(184,84,42,.04) 0%, transparent 40%),
+      radial-gradient(circle at 88% 92%, rgba(28,26,23,.04) 0%, transparent 50%);
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  .site-header {
+    border-bottom: 1px solid var(--rule);
+    background: var(--card);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    box-shadow: var(--shadow-sm);
+  }
+  .header-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 18px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .header-title {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .header-title .eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+  }
+  .header-title h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 22px;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    margin: 0;
+    font-variation-settings: "opsz" 24, "SOFT" 50;
+  }
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .save-status {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: .04em;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    border: 1px solid var(--rule-soft);
+    border-radius: 4px;
+    background: var(--paper);
+    min-width: 140px;
+    justify-content: center;
+  }
+  .save-status .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--good);
+    flex-shrink: 0;
+  }
+  .save-status.saving .dot { background: var(--accent); animation: pulse 1s infinite; }
+  @keyframes pulse { 50% { opacity: .35; } }
+  .btn {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 9px 16px;
+    border-radius: 4px;
+    border: 1px solid var(--ink);
+    background: var(--card);
+    color: var(--ink);
+    cursor: pointer;
+    transition: all .15s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .btn:hover { background: var(--ink); color: var(--paper); }
+  .btn-primary {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .btn-primary:hover { background: var(--accent); border-color: var(--accent); }
+  .btn-ghost {
+    border-color: var(--rule);
+    background: transparent;
+  }
+  .btn-ghost:hover { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+  .btn-danger { border-color: var(--rule); color: var(--accent-deep); background: transparent; padding: 4px 10px; font-size: 11px; }
+  .btn-danger:hover { background: var(--accent-deep); color: var(--paper); border-color: var(--accent-deep); }
+
+  /* INTRO BANNER */
+  .intro-banner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 20px 32px 0;
+  }
+  .intro-card {
+    background: var(--card);
+    border: 1px solid var(--rule-soft);
+    border-radius: 6px;
+    padding: 18px 22px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 20px;
+    align-items: start;
+    box-shadow: var(--shadow-sm);
+  }
+  .intro-mark {
+    width: 44px;
+    height: 44px;
+    background: var(--ink);
+    color: var(--paper);
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    flex-shrink: 0;
+  }
+  .intro-text { font-size: 13.5px; color: var(--ink-soft); line-height: 1.6; }
+  .intro-text strong { color: var(--ink); font-weight: 600; }
+
+  /* TAB NAVIGATION */
+  .tab-nav-wrap {
+    max-width: 1280px;
+    margin: 18px auto 0;
+    padding: 0 32px;
+  }
+  .tab-nav {
+    display: flex;
+    gap: 0;
+    background: var(--card);
+    border: 1px solid var(--rule-soft);
+    border-radius: 6px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    box-shadow: var(--shadow-sm);
+  }
+  .tab-nav::-webkit-scrollbar { height: 6px; }
+  .tab-nav::-webkit-scrollbar-track { background: transparent; }
+  .tab-nav::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 3px; }
+  .tab-btn {
+    flex: 1 0 auto;
+    min-width: 110px;
+    padding: 12px 14px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    text-align: left;
+    border-right: 1px solid var(--rule-soft);
+    font-family: inherit;
+    color: var(--muted);
+    transition: all .15s ease;
+    position: relative;
+  }
+  .tab-btn:last-child { border-right: none; }
+  .tab-btn:hover { color: var(--ink); background: var(--paper); }
+  .tab-btn.active {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .tab-btn.active .tab-num { color: var(--accent); }
+  .tab-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    letter-spacing: .08em;
+    display: block;
+    margin-bottom: 2px;
+    font-weight: 500;
+  }
+  .tab-label {
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.2;
+    display: block;
+  }
+  .tab-progress {
+    position: absolute;
+    bottom: 4px;
+    left: 14px;
+    right: 14px;
+    height: 2px;
+    background: var(--rule-soft);
+    border-radius: 1px;
+    overflow: hidden;
+  }
+  .tab-progress-fill {
+    height: 100%;
+    background: var(--accent);
+    width: 0%;
+    transition: width .3s ease;
+  }
+  .tab-btn.active .tab-progress { background: rgba(255,255,255,.15); }
+  .tab-btn.active .tab-progress-fill { background: var(--accent); }
+
+  /* MAIN CONTENT */
+  main {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 24px 32px 80px;
+  }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; animation: fadeIn .25s ease; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .panel-header {
+    margin-bottom: 24px;
+    padding-bottom: 18px;
+    border-bottom: 2px solid var(--ink);
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .panel-title-group .panel-eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: .14em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .panel-title-group h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 34px;
+    line-height: 1.05;
+    margin: 0;
+    letter-spacing: -0.02em;
+    font-variation-settings: "opsz" 144, "SOFT" 100;
+  }
+  .panel-title-group h2 em {
+    font-style: italic;
+    color: var(--accent-deep);
+    font-weight: 400;
+  }
+  .panel-meta {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    text-align: right;
+    letter-spacing: .04em;
+    line-height: 1.6;
+  }
+
+  /* SECTIONS */
+  .section {
+    margin-bottom: 36px;
+    background: var(--card);
+    border: 1px solid var(--rule-soft);
+    border-radius: 6px;
+    padding: 24px 26px;
+    box-shadow: var(--shadow-sm);
+  }
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    padding-bottom: 14px;
+    margin-bottom: 18px;
+    border-bottom: 1px solid var(--rule-soft);
+  }
+  .section-num {
+    font-family: 'Fraunces', serif;
+    font-size: 28px;
+    font-weight: 400;
+    color: var(--accent);
+    line-height: 1;
+    font-variation-settings: "opsz" 144;
+  }
+  .section-title {
+    font-family: 'Fraunces', serif;
+    font-size: 19px;
+    font-weight: 500;
+    color: var(--ink);
+    margin: 0;
+    letter-spacing: -0.005em;
+  }
+  .section-note {
+    font-size: 12.5px;
+    color: var(--muted);
+    margin-top: 4px;
+    font-style: italic;
+  }
+  .section-intro {
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    margin-bottom: 16px;
+    padding: 12px 14px;
+    background: var(--paper);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 4px 4px 0;
+  }
+
+  /* FORM FIELDS */
+  .field-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+    margin-bottom: 18px;
+  }
+  .field-grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+  .field-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+  @media (max-width: 720px) {
+    .field-grid.cols-2, .field-grid.cols-3 { grid-template-columns: 1fr; }
+  }
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .field.span-2 { grid-column: span 2; }
+  .field.span-full { grid-column: 1 / -1; }
+  @media (max-width: 720px) { .field.span-2 { grid-column: span 1; } }
+
+  .field-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--ink-soft);
+    letter-spacing: .02em;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .field-label .req { color: var(--accent); font-size: 14px; line-height: 0; }
+  .field-hint {
+    font-size: 11px;
+    color: var(--muted);
+    font-style: italic;
+    margin-top: -2px;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="number"],
+  input[type="date"],
+  textarea,
+  select {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 13.5px;
+    padding: 9px 12px;
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    background: var(--paper);
+    color: var(--ink);
+    transition: all .15s ease;
+    width: 100%;
+    line-height: 1.4;
+  }
+  input:focus,
+  textarea:focus,
+  select:focus {
+    outline: none;
+    border-color: var(--ink);
+    background: var(--card);
+    box-shadow: 0 0 0 3px rgba(184,84,42,.12);
+  }
+  input::placeholder, textarea::placeholder { color: #b5ad9b; }
+  textarea { resize: vertical; min-height: 78px; font-family: inherit; }
+  select {
+    appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path d='M1 1l4 4 4-4' stroke='%231c1a17' stroke-width='1.4' fill='none' stroke-linecap='round'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 32px;
+  }
+
+  /* RADIO / CHECKBOX */
+  .opt-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .opt-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    cursor: pointer;
+    font-size: 12.5px;
+    background: var(--paper);
+    transition: all .12s ease;
+    user-select: none;
+  }
+  .opt-pill:hover { border-color: var(--ink); }
+  .opt-pill input { display: none; }
+  .opt-pill.checked {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+  }
+  .opt-pill .check-mark {
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    border: 1.5px solid var(--rule);
+    background: var(--card);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .opt-pill.checked .check-mark { background: var(--accent); border-color: var(--accent); }
+  .opt-pill.checked .check-mark::after { content:""; width:5px; height:5px; background: var(--paper); border-radius:50%; }
+
+  /* TABLES */
+  .tbl-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--rule-soft);
+    border-radius: 4px;
+    background: var(--paper);
+    margin-bottom: 14px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12.5px;
+    min-width: 600px;
+  }
+  th {
+    text-align: left;
+    font-weight: 500;
+    padding: 10px 10px;
+    background: var(--ink);
+    color: var(--paper);
+    font-size: 11px;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    border-right: 1px solid rgba(255,255,255,.08);
+    position: sticky;
+    top: 0;
+    white-space: nowrap;
+  }
+  th:last-child { border-right: none; }
+  td {
+    padding: 4px;
+    border-bottom: 1px solid var(--rule-soft);
+    border-right: 1px solid var(--rule-soft);
+    background: var(--card);
+    vertical-align: top;
+  }
+  td:last-child { border-right: none; }
+  tr:last-child td { border-bottom: none; }
+  td input, td textarea, td select {
+    border: none;
+    background: transparent;
+    padding: 6px 8px;
+    border-radius: 2px;
+    font-size: 12.5px;
+    min-height: 30px;
+  }
+  td input:focus, td textarea:focus, td select:focus {
+    background: var(--paper);
+    box-shadow: inset 0 0 0 1.5px var(--accent);
+  }
+  td textarea { min-height: 30px; resize: vertical; }
+  .tbl-row-num {
+    font-family: 'IBM Plex Mono', monospace;
+    color: var(--muted);
+    font-size: 10px;
+    text-align: center;
+    width: 32px;
+    background: var(--paper) !important;
+  }
+  .tbl-action-cell {
+    width: 60px;
+    text-align: center;
+    background: var(--paper) !important;
+  }
+  .tbl-checkbox {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--accent);
+    cursor: pointer;
+  }
+  .tbl-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+  .tbl-add {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 12px;
+    padding: 6px 12px;
+    border: 1px dashed var(--rule);
+    background: var(--paper);
+    border-radius: 4px;
+    cursor: pointer;
+    color: var(--accent-deep);
+    transition: all .15s ease;
+  }
+  .tbl-add:hover {
+    border-color: var(--accent);
+    background: var(--card);
+    border-style: solid;
+  }
+
+  /* PANEL FOOTER */
+  .panel-footer {
+    margin-top: 36px;
+    padding-top: 24px;
+    border-top: 1px solid var(--rule);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .panel-counter {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: .06em;
+  }
+
+  /* MODAL */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(28,26,23,.55);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+    padding: 20px;
+    backdrop-filter: blur(2px);
+  }
+  .modal-overlay.show { display: flex; }
+  .modal {
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 28px;
+    max-width: 480px;
+    width: 100%;
+    box-shadow: 0 24px 48px rgba(0,0,0,.3);
+  }
+  .modal h3 {
+    font-family: 'Fraunces', serif;
+    margin: 0 0 8px;
+    font-size: 22px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+  .modal p {
+    color: var(--ink-soft);
+    margin: 0 0 18px;
+    font-size: 13.5px;
+  }
+  .modal-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+  }
+
+  /* CHIP */
+  .chip {
+    display: inline-flex;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 10.5px;
+    font-family: 'IBM Plex Mono', monospace;
+    letter-spacing: .04em;
+    background: var(--paper);
+    border: 1px solid var(--rule-soft);
+    color: var(--muted);
+  }
+
+  /* PRINT */
+  @media print {
+    .site-header, .tab-nav-wrap, .panel-footer, .header-actions, .save-status, .tbl-add, .tbl-actions button { display: none !important; }
+    body { background: white; }
+    .tab-panel { display: block !important; page-break-after: always; }
+    .section { box-shadow: none; border: 1px solid #999; }
+    main { max-width: none; padding: 0; }
+  }
+
+  /* RESPONSIVE TWEAKS */
+  @media (max-width: 720px) {
+    .header-inner { padding: 14px 18px; }
+    main { padding: 18px 18px 60px; }
+    .tab-nav-wrap, .intro-banner { padding-left: 18px; padding-right: 18px; }
+    .panel-title-group h2 { font-size: 26px; }
+    .section { padding: 18px 16px; }
+  }
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-title">
+      <span class="eyebrow">Builder Specification Form · v1.0</span>
+      <h1>Comprehensive Builder Questionnaire</h1>
+    </div>
+    <div class="header-actions">
+      <div class="save-status" id="saveStatus">
+        <span class="dot"></span>
+        <span id="saveText">Loading…</span>
+      </div>
+      <button class="btn btn-ghost" onclick="exportJSON()">↓ Export JSON</button>
+      <button class="btn btn-ghost" onclick="window.print()">⎙ Print</button>
+      <button class="btn btn-primary" onclick="confirmReset()">Reset</button>
+    </div>
+  </div>
+</header>
+
+<!-- INTRO -->
+<div class="intro-banner">
+  <div class="intro-card">
+    <div class="intro-mark">¶</div>
+    <div class="intro-text">
+      <strong>Builder instructions —</strong> Fill every section clearly and write <em>NA</em> where not applicable. For brands, specify make, model/series, and grade. For dimensions, state unit and measurement basis. For pricing, declare quantity, unit, rate, taxes, transport, wastage, and labour inclusions. Clearly separate items that are included, excluded, optional, provisional, or owner-supplied. Your responses save automatically and you can navigate tabs in any order.
+    </div>
+  </div>
+</div>
+
+<!-- TAB NAVIGATION -->
+<div class="tab-nav-wrap">
+  <nav class="tab-nav" id="tabNav" role="tablist"></nav>
+</div>
+
+<!-- MAIN CONTENT -->
+<main id="main"></main>
+
+<!-- RESET MODAL -->
+<div class="modal-overlay" id="resetModal">
+  <div class="modal">
+    <h3>Clear all responses?</h3>
+    <p>This permanently erases every field across all 12 tabs. This action cannot be undone. Consider exporting your current data first.</p>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="hideModal('resetModal')">Cancel</button>
+      <button class="btn" style="border-color:var(--accent-deep);color:var(--accent-deep);" onclick="resetAll()">Yes, clear everything</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   FORM SCHEMA
+   ============================================================ */
+const FORM_SCHEMA = [
+  /* ---------- TAB 1: BUILDER & PROJECT ---------- */
+  {
+    id: 'builder-project',
+    label: 'Builder & Project',
+    title: 'Builder identity &',
+    titleEm: 'project basis',
+    sections: [
+      {
+        num: '01',
+        title: 'Builder identity and proposal basis',
+        fields: [
+          { type: 'grid', cols: 2, fields: [
+            { type: 'text', name: 'builder_name', label: 'Builder / Firm Name', required: true },
+            { type: 'text', name: 'contact_person', label: 'Contact Person', required: true },
+            { type: 'tel', name: 'phone', label: 'Phone' },
+            { type: 'email', name: 'email', label: 'Email' },
+          ]},
+          { type: 'textarea', name: 'office_address', label: 'Office Address' },
+          { type: 'grid', cols: 2, fields: [
+            { type: 'text', name: 'license', label: 'License / Registration Details' },
+            { type: 'text', name: 'gst', label: 'GST / Tax Registration' },
+            { type: 'number', name: 'years_exp', label: 'Years in Residential Construction' },
+            { type: 'select', name: 'contract_type', label: 'Type of Contract Offered', options: ['Lump sum','Item rate','Cost plus','Labor only','Material plus labor','Other'] },
+          ]},
+          { type: 'pillgroup', name: 'reviewed_drawings', label: 'Has this proposal been prepared based on reviewed drawings?', options: ['Yes','No'] },
+          { type: 'pillgroup', name: 'docs_reviewed', label: 'Documents reviewed by builder', multiple: true, options: ['Architectural drawings','Structural drawings','Soil report','MEP drawings','Elevation drawings','Interior drawings','Approval drawings','Other'] },
+          { type: 'textarea', name: 'pricing_assumptions', label: 'Assumptions made while pricing', hint: 'List every assumption that materially affects price or scope.' },
+          { type: 'textarea', name: 'exclusions', label: 'Items specifically excluded from this proposal' },
+          { type: 'textarea', name: 'optional_items', label: 'Optional items quoted separately' },
+        ]
+      },
+      {
+        num: '02',
+        title: 'Project summary',
+        fields: [
+          { type: 'grid', cols: 2, fields: [
+            { type: 'text', name: 'project_name', label: 'Project Name', required: true },
+            { type: 'text', name: 'project_location', label: 'Project Location' },
+            { type: 'text', name: 'site_address', label: 'Site Address / Survey No. / Plot No.' },
+            { type: 'text', name: 'site_dimensions', label: 'Site Dimensions' },
+            { type: 'text', name: 'road_access', label: 'Road Width / Site Access Details' },
+            { type: 'select', name: 'building_type', label: 'Expected Building Type', options: ['Independent house','Duplex','Villa','Rental block','Other'] },
+            { type: 'text', name: 'plot_area', label: 'Total Plot Area' },
+            { type: 'text', name: 'builtup_area', label: 'Total Proposed Built-up Area' },
+          ]},
+          { type: 'pillgroup', name: 'floors', label: 'Number of Floors Covered in Quote', multiple: true, options: ['Stilt','Ground','First','Second','Third','Terrace','Other'] },
+          { type: 'select', name: 'measurement_basis', label: 'Measurement basis used for quotation', options: ['Plot area','Built-up area','Super built-up area','Carpet area','Item-wise quantity takeoff','Other'] },
+          { type: 'grid', cols: 3, fields: [
+            { type: 'date', name: 'start_date', label: 'Expected project start date' },
+            { type: 'text', name: 'completion_period', label: 'Expected completion period', hint: 'e.g. 14 months' },
+            { type: 'text', name: 'quote_validity', label: 'Validity of quotation', hint: 'e.g. 60 days from issue' },
+          ]},
+        ]
+      }
+    ]
+  },
+
+  /* ---------- TAB 2: SCOPE MATRIX ---------- */
+  {
+    id: 'scope-matrix',
+    label: 'Scope Matrix',
+    title: 'Scope &',
+    titleEm: 'responsibility matrix',
+    sections: [
+      {
+        num: '03',
+        title: 'Scope matrix',
+        intro: 'For each work category, mark which party is responsible. Multiple checks per row are allowed if scope is shared.',
+        fields: [
+          { type: 'table', name: 'scope_matrix',
+            columns: [
+              { key: 'category', label: 'Work category', type: 'text', readonly: true, width: 200 },
+              { key: 'included', label: 'Included', type: 'checkbox' },
+              { key: 'excluded', label: 'Excluded', type: 'checkbox' },
+              { key: 'optional', label: 'Optional', type: 'checkbox' },
+              { key: 'owner', label: 'By owner', type: 'checkbox' },
+              { key: 'nominated', label: 'By nominated vendor', type: 'checkbox' },
+              { key: 'notes', label: 'Notes / assumptions', type: 'text' },
+            ],
+            defaultRows: [
+              'Site survey / setting out','Soil investigation coordination','Site clearing','Excavation','Foundation','RCC frame','Masonry','Waterproofing','Roofing / terrace treatment','Plastering','Flooring','Wall dado / cladding','Doors','Windows','Railings / grills','Plumbing','Sanitary fixtures','Electrical wiring','Switches / accessories','Lighting fixtures','HVAC / AC provisions','False ceiling','Painting','Modular kitchen','Wardrobes / carpentry','Compound wall / gate','Septic / STP / sump / rainwater systems','External paving / driveway','Landscaping','Testing and commissioning','Final cleaning','Handover documentation'
+            ].map(c => ({ category: c })),
+            allowAdd: true, addLabel: '+ Add custom scope item'
+          }
+        ]
+      }
+    ]
+  },
+
+  /* ---------- TAB 3: PRE-CONSTRUCTION ---------- */
+  {
+    id: 'pre-construction',
+    label: 'Pre-Construction',
+    title: 'Site, approvals',
+    titleEm: '& project controls',
+    sections: [
+      {
+        num: '04',
+        title: 'Site and design inputs',
+        intro: 'Provide observations and assumptions about the site that affect constructability and budget.',
+        fields: [
+          { type: 'textarea', name: 'site_topography', label: 'Site topography, slope, filling or cutting needed' },
+          { type: 'textarea', name: 'site_constraints', label: 'Existing trees, rock, utilities, easements, neighbouring constraints' },
+          { type: 'grid', cols: 2, fields: [
+            { type: 'text', name: 'water_source', label: 'Water source during construction' },
+            { type: 'text', name: 'temp_electricity', label: 'Temporary electricity arrangement' },
+          ]},
+          { type: 'textarea', name: 'site_access', label: 'Access for trucks, concrete pumps, and storage' },
+          { type: 'textarea', name: 'site_drainage', label: 'Site drainage during construction' },
+          { type: 'textarea', name: 'site_safety', label: 'Site safety and barricading approach' },
+          { type: 'pillgroup', name: 'temp_shed', label: 'Temporary shed / storage / labour accommodation', options: ['Included','Excluded'] },
+        ]
+      },
+      {
+        num: '05',
+        title: 'Approvals and coordination',
+        fields: [
+          { type: 'table', name: 'approvals',
+            columns: [
+              { key: 'item', label: 'Item', type: 'text', readonly: true, width: 220 },
+              { key: 'handles', label: 'Builder handles', type: 'checkbox' },
+              { key: 'assists', label: 'Builder assists', type: 'checkbox' },
+              { key: 'excluded', label: 'Excluded', type: 'checkbox' },
+              { key: 'notes', label: 'Notes', type: 'text' },
+            ],
+            defaultRows: [
+              'Setting out and benchmarks','Permit / approval coordination','Structural engineer coordination','Architect coordination during execution','Shop drawings / working drawings','Material approval submissions','Stage inspection coordination','Third-party testing coordination','Completion / occupancy support'
+            ].map(item => ({ item }))
+          }
+        ]
+      },
+      {
+        num: '06',
+        title: 'Project controls',
+        fields: [
+          { type: 'grid', cols: 3, fields: [
+            { type: 'pillgroup', name: 'work_schedule_attached', label: 'Detailed work schedule attached?', options: ['Yes','No'] },
+            { type: 'pillgroup', name: 'milestone_plan_attached', label: 'Milestone plan attached?', options: ['Yes','No'] },
+            { type: 'pillgroup', name: 'payment_schedule_attached', label: 'Payment schedule attached?', options: ['Yes','No'] },
+          ]},
+          { type: 'textarea', name: 'change_handling', label: 'Method for handling changes / extra items' },
+          { type: 'textarea', name: 'extra_quantities', label: 'Method for measuring extra quantities' },
+          { type: 'textarea', name: 'delay_responsibility', label: 'Delay responsibility and extension-of-time approach' },
+          { type: 'textarea', name: 'retention_dlp', label: 'Retention / defect liability terms' },
+        ]
+      }
+    ]
+  },
+
+  /* ---------- TAB 4: SUBSTRUCTURE ---------- */
+  {
+    id: 'substructure',
+    label: 'Substructure',
+    title: 'Earthwork',
+    titleEm: '& foundation',
+    sections: [
+      {
+        num: '07',
+        title: 'Earthwork and site preparation',
+        fields: [
+          { type: 'table', name: 'earthwork',
+            columns: [
+              { key: 'item', label: 'Item', type: 'text', readonly: true, width: 180 },
+              { key: 'spec', label: 'Specification / process', type: 'textarea' },
+              { key: 'dim', label: 'Dimensions / qty basis', type: 'text' },
+              { key: 'unit', label: 'Unit', type: 'text' },
+              { key: 'qty', label: 'Qty', type: 'number' },
+              { key: 'rate', label: 'Rate', type: 'number' },
+              { key: 'amount', label: 'Amount', type: 'number' },
+              { key: 'notes', label: 'Brand / source / notes', type: 'text' },
+            ],
+            defaultRows: ['Site clearing','Layout marking','Excavation for footings','Excavation for pits / tanks','Dewatering if required','Disposal of excavated earth','Backfilling','Compaction method','Anti-termite treatment'].map(item => ({ item }))
+          }
+        ]
+      },
+      {
+        num: '08',
+        title: 'Foundation and substructure',
+        fields: [
+          { type: 'table', name: 'foundation',
+            columns: [
+              { key: 'item', label: 'Item', type: 'text', readonly: true, width: 180 },
+              { key: 'spec', label: 'Proposed specification', type: 'textarea' },
+              { key: 'dim', label: 'Dimensions / grade / mix', type: 'text' },
+              { key: 'unit', label: 'Unit', type: 'text' },
+              { key: 'qty', label: 'Qty', type: 'number' },
+              { key: 'rate', label: 'Rate', type: 'number' },
+              { key: 'amount', label: 'Amount', type: 'number' },
+              { key: 'notes', label: 'Tests / notes', type: 'text' },
+            ],
+            defaultRows: ['PCC below footing','Footings','Pedestals','Foundation columns','Plinth beam','Foundation masonry','DPC / plinth protection','Filling inside plinth','Compaction / layer thickness','Soling / sub-base'].map(item => ({ item }))
+          }
+        ]
+      }
+    ]
+  },
+
+  /* ---------- TAB 5: STRUCTURE & MASONRY ---------- */
+  {
+    id: 'structure-masonry',
+    label: 'Structure & Masonry',
+    title: 'RCC frame',
+    titleEm: '& wall systems',
+    sections: [
+      {
+        num: '09',
+        title: 'Structural frame and RCC works',
+        intro: 'Each item should be tied to a clear description, unit, quantity, rate and amount with assumptions or exclusions noted.',
+        fields: [
+          { type: 'table', name: 'rcc',
+            columns: [
+              { key: 'item', label: 'RCC / structural item', type: 'text', readonly: true, width: 180 },
+              { key: 'concrete_grade', label: 'Concrete grade', type: 'text' },
+              { key: 'steel', label: 'Steel grade / brand', type: 'text' },
+              { key: 'formwork', label: 'Formwork basis', type: 'text' },
+              { key: 'dim', label: 'Member sizes', type: 'text' },
+              { key: 'unit', label: 'Unit', type: 'text' },
+              { key: 'qty', label: 'Qty', type: 'number' },
+              { key: 'rate', label: 'Rate', type: 'number' },
+              { key: 'amount', label: 'Amount', type: 'number' },
+              { key: 'notes', label: 'Notes', type: 'text' },
+            ],
+            defaultRows: ['Columns','Beams','Slabs','Staircase','Sunshades / chajjas','Lift pit / machine room (if any)','Water tank RCC','Retaining walls (if any)'].map(item => ({ item }))
+          },
+          { type: 'grid', cols: 2, fields: [
+            { type: 'text', name: 'cement_brand', label: 'Cement brand(s) proposed' },
+            { type: 'select', name: 'concrete_type', label: 'Ready-mix or site-mix concrete', options: ['Ready-mix (RMC)','Site-mix','Combination — specify in notes'] },
+            { type: 'text', name: 'steel_brand', label: 'Steel brands proposed' },
+            { type: 'text', name: 'admixtures_curing', label: 'Cover blocks, admixtures, curing method' },
+            { type: 'pillgroup', name: 'qa_concrete', label: 'Cube / slump testing & QA records included?', options: ['Yes','No','Owner pays separately'] },
+            { type: 'text', name: 'shuttering', label: 'Shuttering material and reuse quality control' },
+          ]},
+        ]
+      },
+      {
+        num: '10',
+        title: 'Masonry and wall systems',
+        fields: [
+          { type: 'table', name: 'masonry',
+            columns: [
+              { key: 'item', label: 'Item', type: 'text', readonly: true, width: 180 },
+              { key: 'material', label: 'Material type', type: 'text' },
+              { key: 'thickness', label: 'Thickness', type: 'text' },
+              { key: 'mortar', label: 'Mortar / adhesive', type: 'text' },
+              { key: 'brand', label: 'Brand / grade', type: 'text' },
+              { key: 'unit', label: 'Unit', type: 'text' },
+              { key: 'qty', label: 'Qty', type: 'number' },
+              { key: 'rate', label: 'Rate', type: 'number' },
+              { key: 'amount', label: 'Amount', type: 'number' },
+              { key: 'notes', label: 'Notes', type: 'text' },
+            ],
+            defaultRows: ['External walls','Internal walls','Parapet walls','Toilet sunken fill / kerb walls','Duct walls','Boundary wall masonry'].map(item => ({ item }))
+          }
+        ]
+      }
+    ]
+  },
+
+  /* ---------- TAB 6: WATERPROOFING & ROOFING ---------- */
+  {
+    id: 'waterproofing-roof',
+    label: 'Waterproofing & Roof',
+    title: 'Waterproofing',
+    titleEm: '& terrace systems',
+    sections: [
+      {
+        num: '11',
+        title: 'Waterproofing and damp protection',
+        intro: 'Waterproofing is high-risk for failure and a common point of warranty dispute. Specify product, surface preparation, test method and warranty per zone.',
+        fields: [
+          { type: 'table', name: 'waterproofing',
+            columns: [
+              { key: 'area', label: 'Area', type: 'text', readonly: true, width: 180 },
+              { key: 'system', label: 'System proposed', type: 'text' },
+              { key: 'brand', label: 'Brand / product', type: 'text' },
+              { key: 'prep', label: 'Surface preparation', type: 'text' },
+              { key: 'test', label: 'Test method', type: 'text' },
+              { key: 'warranty', label: 'Warranty', type: 'text' },
+              { key: 'unit', label: 'Unit', type: 'text' },
+              { key: 'qty', label: 'Qty', type: 'number' },
+              { key: 'rate', label: 'Rate', type: 'number' },
+              { key: 'amount', label: 'Amount', type: 'number' },
+            ],
+            defaultRows: ['Footing / plinth contact zones','Toilets','Balconies','Terrace','Sump / UG tank','Overhead tank','External walls (as applicable)'].map(area => ({ area }))
+          }
+        ]
+      },
+      {
+        num: '12',
+        title: 'Roofing and terrace system',
+        fields: [
+          { type: 'table', name: 'roofing',
+            columns: [
+              { key: 'item', label: 'Item', type: 'text', readonly: true, width: 180 },
+              { key: 'system', label: 'System / material', type: 'text' },
+              { key: 'spec', label: 'Thickness / slope / section', type: 'text' },
+              { key: 'brand', label: 'Brand', type: 'text' },
+              { key: 'unit', label: 'Unit', type: 'text' },
+              { key: 'qty', label: 'Qty', type: 'number' },
+              { key: 'rate', label: 'Rate', type: 'number' },
+              { key: 'amount', label: 'Amount', type: 'number' },
+              { key: 'notes', label: 'Notes', type: 'text' },
+            ],
+            defaultRows: ['RCC roof slab','Weathering course','Insulation','Waterproof top coat','Rainwater outlets','Solar support provisions','Access ladders / hatch'].map(item => ({ item }))
+          }
+        ]
+      }
+    ]
+  },
+
+  /* ---------- TAB 7: FINISHES ---------- */
+  {
+    id: 'finishes',
+    label: 'Finishes',
+    title: 'Plaster, flooring',
+    titleEm: '& painting',
+    sections: [
+      {
+        num: '13',
+        title: 'Plastering, putty and surface preparation',
+        fields: [
+          { type: 'table', name: 'plaster',
+            columns: [
+              { key: 'item', label: 'Item', type: 'text', readonly: true, width: 180 },
+              { key: 'location', label: 'Internal / external', type: 'text' },
+              { key: 'thickness', label: 'Thickness', type: 'text' },
+              { key: 'mix', label: 'Material / mix', type: 'text' },
+              { key: 'brand', label: 'Brand', type: 'text' },
+              { key: 'unit', label: 'Unit', type: 'text' },
+              { key: 'qty', label: 'Qty', type: 'number' },
+              { key: 'rate', label: 'Rate', type: 'number' },
+              { key: 'amount', label: 'Amount', type: 'number' },
+              { key: 'notes', label: 'Notes', type: 'text' },
+            ],
+            defaultRows: ['Internal wall plaster','Ceiling plaster','External plaster','Waterproof plaster additives','Putty / skim coat'].map(item => ({ item }))
+          }
+        ]
+      },
+      {
+        num: '14',
+        title: 'Flooring, skirting and wall finishes',
+        fields: [
+          { type: 'table', name: 'flooring',
+            columns: [
+              { key: 'space', label: 'Space / item', type: 'text', readonly: true, width: 180 },
+              { key: 'material', label: 'Material', type: 'text' },
+              { key: 'size', label: 'Size / thickness', type: 'text' },
+              { key: 'brand', label: 'Brand / series', type: 'text' },
+              { key: 'finish', label: 'Finish', type: 'text' },
+              { key: 'unit', label: 'Unit', type: 'text' },
+              { key: 'qty', label: 'Qty', type: 'number' },
+              { key: 'rate', label: 'Rate', type: 'number' },
+              { key: 'amount', label: 'Amount', type: 'number' },
+              { key: 'pattern', label: 'Laying pattern / notes', type: 'text' },
+            ],
+            defaultRows: ['Living room floor','Bedrooms floor','Kitchen floor','Toilet floor','Staircase finish','Balcony / sit-out','Terrace tile (if any)','Skirting','Wall dado — kitchen','Wall dado — toilets','Exterior cladding'].map(space => ({ space }))
+          }
+        ]
+      },
+      {
+        num: '20',
+        title: 'Ceilings, painting and decorative finishes',
+        fields: [
+          { type: 'table', name: 'painting',
+            columns: [
+              { key: 'item', label: 'Item', type: 'text', readonly: true, width: 180 },
+              { key: 'spec', label: 'Specification', type: 'text' },
+              { key: 'brand', label: 'Brand / product', type: 'text' },
+              { key: 'finish_level', label: 'Finish level', type: 'text' },
+              { key: 'unit', label: 'Unit', type: 'text' },
+              { key: 'qty', label: 'Qty', type: 'number' },
+              { key: 'rate', label: 'Rate', type: 'number' },
+              { key: 'amount', label: 'Amount', type: 'number' },
+              { key: 'notes', label: 'Notes', type: 'text' },
+            ],
+            defaultRows: ['Ceiling finish','False ceiling','Internal primer','Internal paint','External paint','Texture / feature wall finish','Metal / wood coating'].map(item => ({ item }))
+          }
+        ]
+      }
+    ]
+  },
+
+  /* ---------- TAB 8: DOORS, WINDOWS & JOINERY ---------- */
+  {
+    id: 'doors-joinery',
+    label: 'Doors & Joinery',
+    title: 'Doors, windows',
+    titleEm: '& fixed joinery',
+    sections: [
+      {
+        num: '15',
+        title: 'Doors, windows, ventilators, hardware, grills and railings',
+        intro: 'Specify finish preferences, hardware brand, window style and material in detail — these heavily affect both cost and final quality.',
+        fields: [
+          { type: 'table', name: 'doors_windows',
+            columns: [
+              { key: 'item', label: 'Item', type: 'text', readonly: true, width: 160 },
+              { key: 'location', label: 'Location', type: 'text' },
+              { key: 'size', label: 'Size', type: 'text' },
+              { key: 'frame', label: 'Frame material', type: 'text' },
+              { key: 'shutter', label: 'Shutter / panel', type: 'text' },
+              { key: 'brand', label: 'Brand / make', type: 'text' },
+              { key: 'hardware', label: 'Hardware brand', type: 'text' },
+              { key: 'finish', label: 'Finish', type: 'text' },
+              { key: 'qty', label: 'Qty', type: 'number' },
+              { key: 'rate', label: 'Rate', type: 'number' },
+              { key: 'amount', label: 'Amount', type: 'number' },
+            ],
+            defaultRows: ['Main door','Bedroom doors','Toilet doors','Utility / service doors','Windows','Ventilators','French / sliding doors','Stair / balcony railings','Safety grills','Gate'].map(item => ({ item }))
+          }
+        ]
+      },
+      {
+        num: '21',
+        title: 'Joinery, wardrobes, modular kitchen and fixed furniture',
+        intro: 'Specify cabinet preferences, hardware, storage needs, closet systems and trim level — avoid lump-sum allowances.',
+        fields: [
+          { type: 'table', name: 'joinery',
+            columns: [
+              { key: 'item', label: 'Item', type: 'text', readonly: true, width: 160 },
+              { key: 'carcass', label: 'Material / carcass', type: 'text' },
+              { key: 'shutter', label: 'Shutter finish', type: 'text' },
+              { key: 'hardware', label: 'Hardware brand', type: 'text' },
+              { key: 'top', label: 'Countertop / accessories', type: 'text' },
+              { key: 'unit', label: 'Unit', type: 'text' },
+              { key: 'qty', label: 'Qty', type: 'number' },
+              { key: 'rate', label: 'Rate', type: 'number' },
+              { key: 'amount', label: 'Amount', type: 'number' },
+              { key: 'notes', label: 'Notes', type: 'text' },
+            ],
+            defaultRows: ['Modular kitchen','Wardrobes','Loft storage','Vanity units','Utility cabinets','TV unit / fixed display'].map(item => ({ item }))
+          }
+        ]
+      }
+    ]
+  },
+
+  /* ---------- TAB 9: PLUMBING & SANITARY ---------- */
+  {
+    id: 'plumbing-sanitary',
+    label: 'Plumbing & Sanitary',
+    title: 'Plumbing, drainage',
+    titleEm: '& water systems',
+    sections: [
+      {
+        num: '16',
+        title: 'Plumbing, drainage and water systems',
+        intro: 'Plumbing failures after walls are closed are costly. Provide ISI-marked material selection and confirm pre-concealment testing.',
+        fields: [
+          { type: 'table', name: 'plumbing',
+            columns: [
+              { key: 'item', label: 'Item', type: 'text', readonly: true, width: 200 },
+              { key: 'spec', label: 'Specification / process', type: 'text' },
+              { key: 'brand', label: 'Brand', type: 'text' },
+              { key: 'size', label: 'Size / capacity', type: 'text' },
+              { key: 'unit', label: 'Unit', type: 'text' },
+              { key: 'qty', label: 'Qty', type: 'number' },
+              { key: 'rate', label: 'Rate', type: 'number' },
+              { key: 'amount', label: 'Amount', type: 'number' },
+              { key: 'test', label: 'Test / notes', type: 'text' },
+            ],
+            defaultRows: ['Water supply piping','Soil and waste piping','Rainwater piping','Floor traps / gully traps','Inspection chambers','Septic tank / STP','Sump','Overhead tank','Pumps','Pressure system (if any)','Solar water heater provision','Water heater / geyser provision','Borewell / municipal / tanker integration','Rainwater harvesting'].map(item => ({ item }))
+          },
+          { type: 'grid', cols: 2, fields: [
+            { type: 'select', name: 'pipe_routing', label: 'Pipe routing method', options: ['Concealed','Exposed','Shaft based','Combination'] },
+            { type: 'pillgroup', name: 'pressure_test', label: 'Pressure testing included before closing walls', options: ['Yes','No'] },
+            { type: 'text', name: 'wp_integration', label: 'Waterproofing integration at wet areas' },
+            { type: 'pillgroup', name: 'plumbing_drawings', label: 'Plumbing layout & as-built drawings included', options: ['Yes','No'] },
+          ]}
+        ]
+      },
+      {
+        num: '17',
+        title: 'Sanitaryware, CP fittings, kitchen and utility fixtures',
+        fields: [
+          { type: 'table', name: 'sanitaryware',
+            columns: [
+              { key: 'item', label: 'Item', type: 'text', readonly: true, width: 160 },
+              { key: 'location', label: 'Location', type: 'text' },
+              { key: 'brand', label: 'Brand', type: 'text' },
+              { key: 'model', label: 'Model / series', type: 'text' },
+              { key: 'finish', label: 'Color / finish', type: 'text' },
+              { key: 'qty', label: 'Qty', type: 'number' },
+              { key: 'rate', label: 'Rate', type: 'number' },
+              { key: 'amount', label: 'Amount', type: 'number' },
+              { key: 'notes', label: 'Notes', type: 'text' },
+            ],
+            defaultRows: ['WC','Wash basin','Faucet / mixer','Shower set','Health faucet','Floor drain','Kitchen sink','Utility sink','Accessories package'].map(item => ({ item }))
+          }
+        ]
+      }
+    ]
+  },
+
+  /* ---------- TAB 10: ELECTRICAL & HVAC ---------- */
+  {
+    id: 'electrical-hvac',
+    label: 'Electrical & HVAC',
+    title: 'Electrical systems',
+    titleEm: '& thermal envelope',
+    sections: [
+      {
+        num: '18',
+        title: 'Electrical systems and low-voltage provisions',
+        intro: 'Plan outlet points before plastering and test circuits before closure.',
+        fields: [
+          { type: 'table', name: 'electrical',
+            columns: [
+              { key: 'item', label: 'Item', type: 'text', readonly: true, width: 180 },
+              { key: 'spec', label: 'Specification', type: 'text' },
+              { key: 'brand', label: 'Brand', type: 'text' },
+              { key: 'rating', label: 'Size / rating', type: 'text' },
+              { key: 'unit', label: 'Unit', type: 'text' },
+              { key: 'qty', label: 'Qty', type: 'number' },
+              { key: 'rate', label: 'Rate', type: 'number' },
+              { key: 'amount', label: 'Amount', type: 'number' },
+              { key: 'notes', label: 'Notes', type: 'text' },
+            ],
+            defaultRows: ['Conduits and boxes','Wiring','Distribution board','MCB / RCCB / SPD','Earthing system','Light points','Fan points','5A sockets','15A / power sockets','AC points','Geyser points','Inverter / UPS provisions','Generator provisions','TV / data / LAN points','CCTV conduits','Doorbell / access control','Solar PV provisions','EV charging provisions'].map(item => ({ item }))
+          },
+          { type: 'grid', cols: 2, fields: [
+            { type: 'pillgroup', name: 'point_schedule', label: 'Room-wise point schedule attached?', options: ['Yes','No'] },
+            { type: 'text', name: 'switch_brand', label: 'Switch plate brand and series' },
+            { type: 'text', name: 'wire_brand', label: 'Wire brand proposed' },
+            { type: 'pillgroup', name: 'db_load', label: 'DB load calculation attached?', options: ['Yes','No'] },
+            { type: 'pillgroup', name: 'electrical_test', label: 'Insulation / continuity / earthing test included?', options: ['Yes','No'] },
+          ]},
+        ]
+      },
+      {
+        num: '19',
+        title: 'HVAC, ventilation and thermal performance',
+        fields: [
+          { type: 'table', name: 'hvac',
+            columns: [
+              { key: 'item', label: 'Item', type: 'text', readonly: true, width: 200 },
+              { key: 'proposal', label: 'Builder proposal', type: 'text' },
+              { key: 'brand', label: 'Brand / system', type: 'text' },
+              { key: 'capacity', label: 'Capacity / size', type: 'text' },
+              { key: 'qty', label: 'Qty', type: 'number' },
+              { key: 'rate', label: 'Rate', type: 'number' },
+              { key: 'amount', label: 'Amount', type: 'number' },
+              { key: 'notes', label: 'Notes', type: 'text' },
+            ],
+            defaultRows: ['AC copper piping provision','Drain line for AC','Outdoor unit ledges / supports','Mechanical ventilation for toilets','Kitchen exhaust provision','Insulation / reflective treatment','Cross ventilation measures'].map(item => ({ item }))
+          }
+        ]
+      }
+    ]
+  },
+
+  /* ---------- TAB 11: EXTERNAL & LIFECYCLE ---------- */
+  {
+    id: 'external-lifecycle',
+    label: 'External & Lifecycle',
+    title: 'External works',
+    titleEm: '& sustainability',
+    sections: [
+      {
+        num: '22',
+        title: 'External works and site development',
+        fields: [
+          { type: 'table', name: 'external',
+            columns: [
+              { key: 'item', label: 'Item', type: 'text', readonly: true, width: 200 },
+              { key: 'spec', label: 'Specification', type: 'text' },
+              { key: 'dim', label: 'Dimensions / area', type: 'text' },
+              { key: 'brand', label: 'Brand / material', type: 'text' },
+              { key: 'unit', label: 'Unit', type: 'text' },
+              { key: 'qty', label: 'Qty', type: 'number' },
+              { key: 'rate', label: 'Rate', type: 'number' },
+              { key: 'amount', label: 'Amount', type: 'number' },
+              { key: 'notes', label: 'Notes', type: 'text' },
+            ],
+            defaultRows: ['Compound wall','Gate','Paving / driveway','Drainage around building','Surface water management','Landscaping','External lighting','Security cabin / ancillary structures'].map(item => ({ item }))
+          }
+        ]
+      },
+      {
+        num: '23',
+        title: 'Sustainability, maintainability and lifecycle items',
+        intro: 'A strong response covers maintenance, durability and future adaptability — not just construction.',
+        fields: [
+          { type: 'textarea', name: 'low_maintenance', label: 'Proposed low-maintenance materials and rationale' },
+          { type: 'textarea', name: 'replacement_cycle', label: 'Expected replacement cycle for key finishes' },
+          { type: 'grid', cols: 2, fields: [
+            { type: 'textarea', name: 'energy_saving', label: 'Energy-saving provisions proposed' },
+            { type: 'textarea', name: 'water_saving', label: 'Water-saving fixtures proposed' },
+          ]},
+          { type: 'textarea', name: 'future_expansion', label: 'Future expansion provisions included' },
+          { type: 'textarea', name: 'future_conduits', label: 'Conduits / sleeves left for future systems' },
+          { type: 'textarea', name: 'maintenance_actions', label: 'Recommended annual maintenance actions' },
+          { type: 'text', name: 'dlp_period', label: "Builder's defect liability period", hint: 'e.g. 12 months / 18 months / 24 months' },
+        ]
+      }
+    ]
+  },
+
+  /* ---------- TAB 12: COMMERCIAL ---------- */
+  {
+    id: 'commercial',
+    label: 'Commercial',
+    title: 'Pricing, rates',
+    titleEm: '& inclusions',
+    sections: [
+      {
+        num: '24',
+        title: 'Pricing structure',
+        intro: 'Separate quantities, rates and totals so the owner can compare line by line instead of relying on an opaque per-square-foot number.',
+        fields: [
+          { type: 'table', name: 'pricing',
+            columns: [
+              { key: 'item', label: 'Pricing item', type: 'text', readonly: true, width: 220 },
+              { key: 'basis', label: 'Basis', type: 'text' },
+              { key: 'amount', label: 'Amount', type: 'number' },
+              { key: 'notes', label: 'Notes', type: 'text' },
+            ],
+            defaultRows: ['Civil and structural works','Waterproofing','Plumbing','Electrical','Doors and windows','Flooring and wall finishes','Painting','Joinery / kitchen / wardrobes','External works','Testing and commissioning','Site overheads',"Builder's margin",'Taxes and statutory charges','Provisional sums','Contingency assumptions','Grand total'].map(item => ({ item }))
+          }
+        ]
+      },
+      {
+        num: '25',
+        title: 'Rate analysis and unit rate clarity',
+        fields: [
+          { type: 'table', name: 'unit_rates',
+            columns: [
+              { key: 'item', label: 'Item', type: 'text', readonly: true, width: 180 },
+              { key: 'unit', label: 'Unit', type: 'text' },
+              { key: 'rate', label: 'Rate', type: 'number' },
+              { key: 'labor', label: 'Labour incl.', type: 'checkbox' },
+              { key: 'material', label: 'Material incl.', type: 'checkbox' },
+              { key: 'wastage', label: 'Wastage incl.', type: 'checkbox' },
+              { key: 'transport', label: 'Transport incl.', type: 'checkbox' },
+              { key: 'notes', label: 'Notes', type: 'text' },
+            ],
+            defaultRows: ['Excavation','PCC','RCC','Reinforcement steel','Brick / block masonry','Plastering','Waterproofing','Flooring','Painting','Plumbing rough-in','Electrical rough-in'].map(item => ({ item }))
+          }
+        ]
+      },
+      {
+        num: '26',
+        title: 'Inclusions, exclusions and provisional sums',
+        fields: [
+          { type: 'table', name: 'inclusions',
+            columns: [
+              { key: 'item', label: 'Item', type: 'text', readonly: true, width: 220 },
+              { key: 'included', label: 'Included', type: 'checkbox' },
+              { key: 'excluded', label: 'Excluded', type: 'checkbox' },
+              { key: 'provisional', label: 'Provisional / allowance', type: 'checkbox' },
+              { key: 'notes', label: 'Notes', type: 'text' },
+            ],
+            defaultRows: ['Architect / consultant fees','Approval fees','Soil testing','Electricity connection charges','Water connection charges','Borewell','Interior loose furniture','Decorative lights / chandeliers','Appliances','AC units','Solar panels','Lift','Government testing / certification fees'].map(item => ({ item }))
+          }
+        ]
+      }
+    ]
+  },
+
+  /* ---------- TAB 13: QA, SCHEDULE & HANDOVER ---------- */
+  {
+    id: 'qa-handover',
+    label: 'QA, Schedule & Handover',
+    title: 'Quality, timeline',
+    titleEm: '& handover',
+    sections: [
+      {
+        num: '27',
+        title: 'Quality assurance and testing',
+        intro: 'Quality control happens stage by stage, not only at final handover.',
+        fields: [
+          { type: 'table', name: 'qa_testing',
+            columns: [
+              { key: 'item', label: 'QA item', type: 'text', readonly: true, width: 200 },
+              { key: 'included', label: 'Included', type: 'checkbox' },
+              { key: 'not_included', label: 'Not included', type: 'checkbox' },
+              { key: 'frequency', label: 'Frequency / standard', type: 'text' },
+              { key: 'records', label: 'Records shared with owner?', type: 'text' },
+            ],
+            defaultRows: ['Setting out verification','Excavation level check','Compaction checks','Concrete cube test','Slump test','Rebar inspection before pour','Waterproofing pond test','Pipe pressure test','Electrical insulation test','Earthing resistance test','Final snag rectification'].map(item => ({ item }))
+          }
+        ]
+      },
+      {
+        num: '28',
+        title: 'Timeline and milestone schedule',
+        fields: [
+          { type: 'table', name: 'milestones',
+            columns: [
+              { key: 'milestone', label: 'Milestone', type: 'text', readonly: true, width: 180 },
+              { key: 'duration', label: 'Estimated duration', type: 'text' },
+              { key: 'start', label: 'Start basis', type: 'text' },
+              { key: 'dependency', label: 'Dependency', type: 'text' },
+              { key: 'payment', label: 'Payment milestone linked', type: 'text' },
+              { key: 'notes', label: 'Notes', type: 'text' },
+            ],
+            defaultRows: ['Mobilization','Excavation and footing','Plinth completion','Ground floor slab','Upper floor slab(s)','Masonry completion','Concealed MEP','Plastering','Flooring','Painting','Joinery and fixtures','External works','Testing and handover'].map(milestone => ({ milestone }))
+          }
+        ]
+      },
+      {
+        num: '29',
+        title: 'Site management and communication',
+        fields: [
+          { type: 'grid', cols: 2, fields: [
+            { type: 'pillgroup', name: 'site_engineer', label: 'Dedicated site engineer provided?', options: ['Yes','No'] },
+            { type: 'text', name: 'principal_visit', label: 'Site visit frequency by builder principal' },
+            { type: 'select', name: 'update_frequency', label: 'Progress update frequency to owner', options: ['Daily','Weekly','Fortnightly','Monthly'] },
+            { type: 'pillgroup', name: 'update_mode', label: 'Mode of update', multiple: true, options: ['WhatsApp','Email','Site meeting','Shared dashboard','Other'] },
+          ]},
+          { type: 'textarea', name: 'material_approval', label: 'Material approval process' },
+          { type: 'textarea', name: 'sample_approval', label: 'Sample approval process for tiles, paint, fixtures, hardware' },
+          { type: 'pillgroup', name: 'mb_shared', label: 'Measurement book / quantity tracking shared with owner?', options: ['Yes','No'] },
+        ]
+      },
+      {
+        num: '30',
+        title: 'Safety, protection and housekeeping',
+        fields: [
+          { type: 'table', name: 'safety',
+            columns: [
+              { key: 'item', label: 'Item', type: 'text', readonly: true, width: 220 },
+              { key: 'included', label: 'Included', type: 'checkbox' },
+              { key: 'notes', label: 'Notes', type: 'text' },
+            ],
+            defaultRows: ['Labour safety gear','Site barricading','Material stacking protection','Neighbour protection measures','Debris disposal','Final deep cleaning before handover'].map(item => ({ item }))
+          }
+        ]
+      },
+      {
+        num: '31',
+        title: 'Handover documents and post-completion support',
+        fields: [
+          { type: 'table', name: 'handover',
+            columns: [
+              { key: 'item', label: 'Handover item', type: 'text', readonly: true, width: 220 },
+              { key: 'included', label: 'Included', type: 'checkbox' },
+              { key: 'notes', label: 'Notes', type: 'text' },
+            ],
+            defaultRows: ['Final BOQ / quantity reconciliation','As-built drawings','Test certificates','Waterproofing warranty','Product warranty cards','Paint shade schedule','Electrical circuit schedule','Plumbing layout record','Maintenance manual','Defects liability commitment letter'].map(item => ({ item }))
+          }
+        ]
+      },
+      {
+        num: '✓',
+        title: 'Builder declaration',
+        intro: 'The undersigned confirms that the response in this form is complete to the best of their knowledge and is intended to serve as the basis for technical and commercial comparison by the owner.',
+        fields: [
+          { type: 'grid', cols: 2, fields: [
+            { type: 'text', name: 'decl_name', label: 'Name', required: true },
+            { type: 'text', name: 'decl_designation', label: 'Designation' },
+            { type: 'text', name: 'decl_company', label: 'Company' },
+            { type: 'date', name: 'decl_date', label: 'Date' },
+          ]},
+          { type: 'text', name: 'decl_signature', label: 'Signature (typed name as electronic signature)' },
+        ]
+      }
+    ]
+  }
+];
+
+/* ============================================================
+   STATE
+   ============================================================ */
+const STORAGE_KEY = 'builder-questionnaire-v1';
+let formState = {};
+let currentTab = 0;
+let saveTimer = null;
+
+/* ============================================================
+   STORAGE
+   ============================================================ */
+async function loadState() {
+  try {
+    if (window.storage && window.storage.get) {
+      const result = await window.storage.get(STORAGE_KEY);
+      if (result && result.value) {
+        formState = JSON.parse(result.value);
+        return;
+      }
+    }
+  } catch (e) {
+    // First load — key doesn't exist; that's fine
+  }
+  formState = {};
+}
+
+async function saveState() {
+  setSaveStatus('saving', 'Saving…');
+  try {
+    if (window.storage && window.storage.set) {
+      await window.storage.set(STORAGE_KEY, JSON.stringify(formState));
+    }
+    setSaveStatus('saved', 'Saved · ' + new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}));
+  } catch (e) {
+    setSaveStatus('error', 'Save failed');
+  }
+}
+
+function setSaveStatus(state, text) {
+  const el = document.getElementById('saveStatus');
+  el.classList.remove('saving','saved','error');
+  if (state) el.classList.add(state);
+  document.getElementById('saveText').textContent = text;
+}
+
+function debouncedSave() {
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(saveState, 500);
+}
+
+/* ============================================================
+   FIELD VALUE GETTERS / SETTERS
+   ============================================================ */
+function getValue(name) { return formState[name] ?? ''; }
+function setValue(name, value) { formState[name] = value; debouncedSave(); updateProgress(); }
+function getTableRow(tableName, rowIdx, colKey) {
+  const t = formState[tableName] || [];
+  return t[rowIdx]?.[colKey] ?? '';
+}
+function setTableRow(tableName, rowIdx, colKey, value) {
+  if (!formState[tableName]) formState[tableName] = [];
+  if (!formState[tableName][rowIdx]) formState[tableName][rowIdx] = {};
+  formState[tableName][rowIdx][colKey] = value;
+  debouncedSave();
+  updateProgress();
+}
+
+/* ============================================================
+   RENDERING
+   ============================================================ */
+function renderTabs() {
+  const nav = document.getElementById('tabNav');
+  nav.innerHTML = FORM_SCHEMA.map((tab, i) => `
+    <button class="tab-btn ${i === currentTab ? 'active' : ''}" data-tab="${i}" role="tab">
+      <span class="tab-num">${String(i + 1).padStart(2, '0')}</span>
+      <span class="tab-label">${tab.label}</span>
+      <div class="tab-progress"><div class="tab-progress-fill" id="progress-${i}"></div></div>
+    </button>
+  `).join('');
+  nav.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => switchTab(parseInt(btn.dataset.tab)));
+  });
+}
+
+function switchTab(idx) {
+  currentTab = idx;
+  document.querySelectorAll('.tab-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
+  document.querySelectorAll('.tab-panel').forEach((p, i) => p.classList.toggle('active', i === idx));
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function renderField(field, container) {
+  if (field.type === 'grid') {
+    const grid = document.createElement('div');
+    grid.className = `field-grid cols-${field.cols || 2}`;
+    field.fields.forEach(f => renderField(f, grid));
+    container.appendChild(grid);
+    return;
+  }
+
+  const wrap = document.createElement('div');
+  wrap.className = 'field' + (field.span ? ` span-${field.span}` : '');
+
+  const label = document.createElement('label');
+  label.className = 'field-label';
+  label.innerHTML = field.label + (field.required ? ' <span class="req">*</span>' : '');
+  wrap.appendChild(label);
+
+  if (field.type === 'text' || field.type === 'email' || field.type === 'tel' || field.type === 'number' || field.type === 'date') {
+    const input = document.createElement('input');
+    input.type = field.type;
+    input.value = getValue(field.name);
+    input.placeholder = field.placeholder || '';
+    input.addEventListener('input', e => setValue(field.name, e.target.value));
+    wrap.appendChild(input);
+  } else if (field.type === 'textarea') {
+    const ta = document.createElement('textarea');
+    ta.value = getValue(field.name);
+    ta.placeholder = field.placeholder || '';
+    ta.rows = field.rows || 3;
+    ta.addEventListener('input', e => setValue(field.name, e.target.value));
+    wrap.appendChild(ta);
+  } else if (field.type === 'select') {
+    const sel = document.createElement('select');
+    sel.innerHTML = '<option value="">— select —</option>' +
+      field.options.map(o => `<option value="${o}">${o}</option>`).join('');
+    sel.value = getValue(field.name);
+    sel.addEventListener('change', e => setValue(field.name, e.target.value));
+    wrap.appendChild(sel);
+  } else if (field.type === 'pillgroup') {
+    const group = document.createElement('div');
+    group.className = 'opt-group';
+    const stored = getValue(field.name);
+    const current = field.multiple ? (Array.isArray(stored) ? stored : []) : stored;
+
+    field.options.forEach(opt => {
+      const pill = document.createElement('label');
+      pill.className = 'opt-pill';
+      const isChecked = field.multiple ? current.includes(opt) : current === opt;
+      if (isChecked) pill.classList.add('checked');
+      pill.innerHTML = `<span class="check-mark"></span><span>${opt}</span>`;
+
+      const input = document.createElement('input');
+      input.type = field.multiple ? 'checkbox' : 'radio';
+      input.name = field.name;
+      input.value = opt;
+      input.checked = isChecked;
+      pill.appendChild(input);
+
+      pill.addEventListener('click', e => {
+        e.preventDefault();
+        if (field.multiple) {
+          let arr = Array.isArray(formState[field.name]) ? [...formState[field.name]] : [];
+          if (arr.includes(opt)) arr = arr.filter(x => x !== opt);
+          else arr.push(opt);
+          setValue(field.name, arr);
+          group.querySelectorAll('.opt-pill').forEach((p, i) => {
+            p.classList.toggle('checked', arr.includes(field.options[i]));
+          });
+        } else {
+          const newVal = formState[field.name] === opt ? '' : opt;
+          setValue(field.name, newVal);
+          group.querySelectorAll('.opt-pill').forEach((p, i) => {
+            p.classList.toggle('checked', newVal === field.options[i]);
+          });
+        }
+      });
+      group.appendChild(pill);
+    });
+    wrap.appendChild(group);
+  } else if (field.type === 'table') {
+    renderTable(field, wrap);
+  }
+
+  if (field.hint) {
+    const hint = document.createElement('div');
+    hint.className = 'field-hint';
+    hint.textContent = field.hint;
+    wrap.appendChild(hint);
+  }
+  container.appendChild(wrap);
+}
+
+function renderTable(field, container) {
+  // Initialize state for this table if not present
+  if (!formState[field.name]) {
+    formState[field.name] = field.defaultRows ? JSON.parse(JSON.stringify(field.defaultRows)) : [];
+  }
+  // Pad missing default rows (in case schema was extended)
+  if (field.defaultRows) {
+    while (formState[field.name].length < field.defaultRows.length) {
+      formState[field.name].push(JSON.parse(JSON.stringify(field.defaultRows[formState[field.name].length])));
+    }
+  }
+
+  const wrap = document.createElement('div');
+  wrap.className = 'tbl-wrap';
+
+  const table = document.createElement('table');
+  // Header
+  const thead = document.createElement('thead');
+  const headTr = document.createElement('tr');
+  headTr.innerHTML = '<th class="tbl-row-num">#</th>' +
+    field.columns.map(c => `<th${c.width ? ` style="min-width:${c.width}px"` : ''}>${c.label}</th>`).join('') +
+    '<th class="tbl-action-cell"></th>';
+  thead.appendChild(headTr);
+  table.appendChild(thead);
+
+  // Body
+  const tbody = document.createElement('tbody');
+  table.appendChild(tbody);
+  wrap.appendChild(table);
+
+  function renderRows() {
+    tbody.innerHTML = '';
+    const rows = formState[field.name] || [];
+    rows.forEach((row, rIdx) => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td class="tbl-row-num">${rIdx + 1}</td>`;
+
+      field.columns.forEach(col => {
+        const td = document.createElement('td');
+        if (col.type === 'checkbox') {
+          const cb = document.createElement('input');
+          cb.type = 'checkbox';
+          cb.className = 'tbl-checkbox';
+          cb.checked = !!getTableRow(field.name, rIdx, col.key);
+          cb.style.margin = '8px';
+          cb.addEventListener('change', e => setTableRow(field.name, rIdx, col.key, e.target.checked));
+          td.style.textAlign = 'center';
+          td.appendChild(cb);
+        } else if (col.readonly) {
+          const span = document.createElement('span');
+          span.style.padding = '6px 8px';
+          span.style.display = 'block';
+          span.style.fontSize = '12.5px';
+          span.style.fontWeight = '500';
+          span.textContent = getTableRow(field.name, rIdx, col.key) || '';
+          td.appendChild(span);
+        } else {
+          const isLong = col.type === 'textarea';
+          const input = document.createElement(isLong ? 'textarea' : 'input');
+          if (!isLong) input.type = col.type === 'number' ? 'number' : 'text';
+          if (isLong) input.rows = 1;
+          input.value = getTableRow(field.name, rIdx, col.key) ?? '';
+          input.addEventListener('input', e => setTableRow(field.name, rIdx, col.key, e.target.value));
+          td.appendChild(input);
+        }
+        tr.appendChild(td);
+      });
+
+      const actionTd = document.createElement('td');
+      actionTd.className = 'tbl-action-cell';
+      // Only allow remove for rows beyond the default count (custom additions)
+      const defaultCount = field.defaultRows ? field.defaultRows.length : 0;
+      if (rIdx >= defaultCount) {
+        const rmBtn = document.createElement('button');
+        rmBtn.className = 'btn-danger';
+        rmBtn.textContent = '✕ Remove';
+        rmBtn.style.cursor = 'pointer';
+        rmBtn.style.borderRadius = '3px';
+        rmBtn.style.border = '1px solid var(--rule)';
+        rmBtn.style.background = 'transparent';
+        rmBtn.style.fontFamily = 'inherit';
+        rmBtn.addEventListener('click', () => {
+          formState[field.name].splice(rIdx, 1);
+          debouncedSave();
+          renderRows();
+          updateProgress();
+        });
+        actionTd.appendChild(rmBtn);
+      }
+      tr.appendChild(actionTd);
+
+      tbody.appendChild(tr);
+    });
+  }
+  renderRows();
+
+  container.appendChild(wrap);
+
+  if (field.allowAdd) {
+    const actions = document.createElement('div');
+    actions.className = 'tbl-actions';
+    const addBtn = document.createElement('button');
+    addBtn.className = 'tbl-add';
+    addBtn.textContent = field.addLabel || '+ Add row';
+    addBtn.addEventListener('click', () => {
+      formState[field.name].push({});
+      renderRows();
+      debouncedSave();
+    });
+    actions.appendChild(addBtn);
+    container.appendChild(actions);
+  }
+}
+
+function renderPanels() {
+  const main = document.getElementById('main');
+  main.innerHTML = '';
+
+  FORM_SCHEMA.forEach((tab, tIdx) => {
+    const panel = document.createElement('section');
+    panel.className = 'tab-panel' + (tIdx === currentTab ? ' active' : '');
+    panel.dataset.tabIdx = tIdx;
+
+    // Panel header
+    const header = document.createElement('div');
+    header.className = 'panel-header';
+    header.innerHTML = `
+      <div class="panel-title-group">
+        <div class="panel-eyebrow">Tab ${String(tIdx + 1).padStart(2, '0')} of ${String(FORM_SCHEMA.length).padStart(2, '0')}</div>
+        <h2>${tab.title} <em>${tab.titleEm}</em></h2>
+      </div>
+      <div class="panel-meta">
+        ${tab.sections.length} section${tab.sections.length > 1 ? 's' : ''}<br>
+        <span class="chip" id="tab-fill-${tIdx}">0% filled</span>
+      </div>
+    `;
+    panel.appendChild(header);
+
+    // Sections
+    tab.sections.forEach(sec => {
+      const secEl = document.createElement('div');
+      secEl.className = 'section';
+      secEl.innerHTML = `
+        <div class="section-header">
+          <div class="section-num">${sec.num}</div>
+          <div>
+            <div class="section-title">${sec.title}</div>
+            ${sec.note ? `<div class="section-note">${sec.note}</div>` : ''}
+          </div>
+        </div>
+      `;
+      if (sec.intro) {
+        const intro = document.createElement('div');
+        intro.className = 'section-intro';
+        intro.textContent = sec.intro;
+        secEl.appendChild(intro);
+      }
+      sec.fields.forEach(f => renderField(f, secEl));
+      panel.appendChild(secEl);
+    });
+
+    // Panel footer
+    const footer = document.createElement('div');
+    footer.className = 'panel-footer';
+    footer.innerHTML = `
+      <button class="btn btn-ghost" ${tIdx === 0 ? 'disabled style="opacity:.4;cursor:not-allowed"' : ''} onclick="switchTab(${tIdx - 1})">← Previous</button>
+      <span class="panel-counter">Tab ${String(tIdx + 1).padStart(2, '0')} / ${String(FORM_SCHEMA.length).padStart(2, '0')}</span>
+      <button class="btn btn-primary" ${tIdx === FORM_SCHEMA.length - 1 ? 'disabled style="opacity:.4;cursor:not-allowed"' : ''} onclick="switchTab(${tIdx + 1})">Next →</button>
+    `;
+    panel.appendChild(footer);
+
+    main.appendChild(panel);
+  });
+}
+
+/* ============================================================
+   PROGRESS TRACKING
+   ============================================================ */
+function countFieldsInTab(tab) {
+  let total = 0, filled = 0;
+  function walk(field) {
+    if (field.type === 'grid') {
+      field.fields.forEach(walk);
+    } else if (field.type === 'table') {
+      const rows = formState[field.name] || [];
+      const dataCols = field.columns.filter(c => !c.readonly);
+      rows.forEach(row => {
+        dataCols.forEach(col => {
+          total++;
+          const v = row[col.key];
+          if (col.type === 'checkbox' ? v === true : (v !== undefined && v !== null && v !== '')) filled++;
+        });
+      });
+    } else if (field.name) {
+      total++;
+      const v = formState[field.name];
+      if (Array.isArray(v) ? v.length > 0 : (v !== undefined && v !== null && v !== '')) filled++;
+    }
+  }
+  tab.sections.forEach(sec => sec.fields.forEach(walk));
+  return { total, filled };
+}
+
+function updateProgress() {
+  FORM_SCHEMA.forEach((tab, i) => {
+    const { total, filled } = countFieldsInTab(tab);
+    const pct = total === 0 ? 0 : Math.round((filled / total) * 100);
+    const fill = document.getElementById(`progress-${i}`);
+    if (fill) fill.style.width = pct + '%';
+    const chip = document.getElementById(`tab-fill-${i}`);
+    if (chip) chip.textContent = `${pct}% filled`;
+  });
+}
+
+/* ============================================================
+   EXPORT / RESET
+   ============================================================ */
+function exportJSON() {
+  const dataStr = JSON.stringify({ exportedAt: new Date().toISOString(), data: formState }, null, 2);
+  const blob = new Blob([dataStr], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  const builderName = (formState.builder_name || 'builder').replace(/[^a-zA-Z0-9-]/g, '_').toLowerCase();
+  const date = new Date().toISOString().split('T')[0];
+  a.download = `builder-questionnaire_${builderName}_${date}.json`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function confirmReset() { document.getElementById('resetModal').classList.add('show'); }
+function hideModal(id) { document.getElementById(id).classList.remove('show'); }
+async function resetAll() {
+  formState = {};
+  try {
+    if (window.storage && window.storage.delete) await window.storage.delete(STORAGE_KEY);
+  } catch (e) {}
+  hideModal('resetModal');
+  renderPanels();
+  updateProgress();
+  setSaveStatus('saved', 'All cleared');
+}
+
+/* ============================================================
+   INITIALIZE
+   ============================================================ */
+async function init() {
+  setSaveStatus('saving', 'Loading…');
+  await loadState();
+  renderTabs();
+  renderPanels();
+  updateProgress();
+  setSaveStatus('saved', 'Ready');
+}
+
+window.exportJSON = exportJSON;
+window.confirmReset = confirmReset;
+window.hideModal = hideModal;
+window.resetAll = resetAll;
+window.switchTab = switchTab;
+
+init();
+</script>
+
+</body>
+</html>
