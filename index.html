@@ -1619,10 +1619,12 @@ function renderField(field, container) {
   const wrap = document.createElement('div');
   wrap.className = 'field' + (field.span ? ` span-${field.span}` : '');
 
-  const label = document.createElement('label');
-  label.className = 'field-label';
-  label.innerHTML = field.label + (field.required ? ' <span class="req">*</span>' : '');
-  wrap.appendChild(label);
+  if (field.label) {
+    const label = document.createElement('label');
+    label.className = 'field-label';
+    label.innerHTML = field.label + (field.required ? ' <span class="req">*</span>' : '');
+    wrap.appendChild(label);
+  }
 
   if (field.type === 'text' || field.type === 'email' || field.type === 'tel' || field.type === 'number' || field.type === 'date') {
     const input = document.createElement('input');
