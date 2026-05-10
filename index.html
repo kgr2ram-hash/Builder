@@ -1477,26 +1477,29 @@ let saveTimer = null;
    ============================================================ */
 async function loadState() {
   try {
-    if (window.storage && window.storage.get) {
-      const result = await window.storage.get(STORAGE_KEY);
-      if (result && result.value) {
-        formState = JSON.parse(result.value);
-        return;
-      }
-    }
+    const res = await fetch('/api/load');
+    const json = await res.json();
+    if (json.ok && json.data) formState = json.data;
+    else formState = {};
   } catch (e) {
-    // First load — key doesn't exist; that's fine
+    formState = {};
   }
-  formState = {};
 }
 
 async function saveState() {
   setSaveStatus('saving', 'Saving…');
   try {
-    if (window.storage && window.storage.set) {
-      await window.storage.set(STORAGE_KEY, JSON.stringify(formState));
+    const res = await fetch('/api/save', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ data: formState })
+    });
+    const json = await res.json();
+    if (json.ok) {
+      setSaveStatus('saved', 'Saved · ' + new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}));
+    } else {
+      setSaveStatus('error', 'Save failed');
     }
-    setSaveStatus('saved', 'Saved · ' + new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}));
   } catch (e) {
     setSaveStatus('error', 'Save failed');
   }
@@ -1884,7 +1887,7 @@ function hideModal(id) { document.getElementById(id).classList.remove('show'); }
 async function resetAll() {
   formState = {};
   try {
-    if (window.storage && window.storage.delete) await window.storage.delete(STORAGE_KEY);
+    await fetch('/api/reset', { method: 'POST' });
   } catch (e) {}
   hideModal('resetModal');
   renderPanels();
