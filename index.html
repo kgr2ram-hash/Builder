@@ -1467,6 +1467,18 @@ const FORM_SCHEMA = [
 ];
 
 /* ============================================================
+   FIELD → TAB MAP  (built once from schema)
+   ============================================================ */
+const FIELD_TAB_MAP = {};
+(function() {
+  function walk(field, tabId) {
+    if (field.type === 'grid') field.fields.forEach(f => walk(f, tabId));
+    else if (field.name) FIELD_TAB_MAP[field.name] = tabId;
+  }
+  FORM_SCHEMA.forEach(tab => tab.sections.forEach(sec => sec.fields.forEach(f => walk(f, tab.id))));
+})();
+
+/* ============================================================
    STATE
    ============================================================ */
 const STORAGE_KEY = 'builder-questionnaire-v1';
@@ -1503,20 +1515,33 @@ async function loadState() {
   try {
     const res = await fetch('/api/load/' + sessionId);
     const json = await res.json();
-    if (json.ok && json.data) formState = json.data;
-    else formState = {};
+    if (json.ok && json.tabs) {
+      formState = {};
+      json.tabs.forEach(tab => Object.assign(formState, tab.data || {}));
+    } else {
+      formState = {};
+    }
   } catch (e) {
     formState = {};
   }
 }
 
-async function saveState() {
+function getTabData(tabId) {
+  const data = {};
+  Object.entries(formState).forEach(([k, v]) => {
+    if (FIELD_TAB_MAP[k] === tabId) data[k] = v;
+  });
+  return data;
+}
+
+async function saveCurrentTab() {
+  const tab = FORM_SCHEMA[currentTab];
   setSaveStatus('saving', 'Saving…');
   try {
-    const res = await fetch('/api/save/' + sessionId, {
+    const res = await fetch(`/api/save/${sessionId}/${tab.id}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ data: formState })
+      body: JSON.stringify({ data: getTabData(tab.id) })
     });
     const json = await res.json();
     if (json.ok) {
@@ -1538,7 +1563,7 @@ function setSaveStatus(state, text) {
 
 function debouncedSave() {
   clearTimeout(saveTimer);
-  saveTimer = setTimeout(saveState, 500);
+  saveTimer = setTimeout(saveCurrentTab, 500);
 }
 
 /* ============================================================
