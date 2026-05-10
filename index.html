@@ -653,7 +653,7 @@
 <header class="site-header">
   <div class="header-inner">
     <div class="header-title">
-      <span class="eyebrow">Builder Specification Form · v1.0</span>
+      <span class="eyebrow">Builder Specification Form · v1.0 · Session: <span id="sessionDisplay">—</span></span>
       <h1>Comprehensive Builder Questionnaire</h1>
     </div>
     <div class="header-actions">
@@ -663,6 +663,8 @@
       </div>
       <button class="btn btn-ghost" onclick="exportJSON()">↓ Export JSON</button>
       <button class="btn btn-ghost" onclick="window.print()">⎙ Print</button>
+      <a class="btn btn-ghost" href="/submissions">All Responses</a>
+      <button class="btn btn-ghost" onclick="newResponse()">+ New</button>
       <button class="btn btn-primary" onclick="confirmReset()">Reset</button>
     </div>
   </div>
@@ -1471,13 +1473,35 @@ const STORAGE_KEY = 'builder-questionnaire-v1';
 let formState = {};
 let currentTab = 0;
 let saveTimer = null;
+let sessionId = '';
+
+/* ============================================================
+   SESSION
+   ============================================================ */
+function initSession() {
+  const params = new URLSearchParams(window.location.search);
+  let id = params.get('id');
+  if (!id) {
+    id = crypto.randomUUID();
+    window.location.replace('/?id=' + id);
+    return false;
+  }
+  sessionId = id;
+  const el = document.getElementById('sessionDisplay');
+  if (el) el.textContent = id.slice(0, 8) + '…';
+  return true;
+}
+
+function newResponse() {
+  window.location.href = '/?id=' + crypto.randomUUID();
+}
 
 /* ============================================================
    STORAGE
    ============================================================ */
 async function loadState() {
   try {
-    const res = await fetch('/api/load');
+    const res = await fetch('/api/load/' + sessionId);
     const json = await res.json();
     if (json.ok && json.data) formState = json.data;
     else formState = {};
@@ -1489,7 +1513,7 @@ async function loadState() {
 async function saveState() {
   setSaveStatus('saving', 'Saving…');
   try {
-    const res = await fetch('/api/save', {
+    const res = await fetch('/api/save/' + sessionId, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ data: formState })
@@ -1885,20 +1909,18 @@ function exportJSON() {
 function confirmReset() { document.getElementById('resetModal').classList.add('show'); }
 function hideModal(id) { document.getElementById(id).classList.remove('show'); }
 async function resetAll() {
-  formState = {};
   try {
-    await fetch('/api/reset', { method: 'POST' });
+    await fetch('/api/reset/' + sessionId, { method: 'POST' });
   } catch (e) {}
   hideModal('resetModal');
-  renderPanels();
-  updateProgress();
-  setSaveStatus('saved', 'All cleared');
+  window.location.href = '/?id=' + crypto.randomUUID();
 }
 
 /* ============================================================
    INITIALIZE
    ============================================================ */
 async function init() {
+  if (!initSession()) return;
   setSaveStatus('saving', 'Loading…');
   await loadState();
   renderTabs();
@@ -1912,6 +1934,7 @@ window.confirmReset = confirmReset;
 window.hideModal = hideModal;
 window.resetAll = resetAll;
 window.switchTab = switchTab;
+window.newResponse = newResponse;
 
 init();
 </script>

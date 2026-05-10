@@ -6,10 +6,10 @@ const app = express();
 app.use(express.json({ limit: '10mb' }));
 app.use(express.static(__dirname));
 
-const MONGO_URI = 'mongodb+srv://kgr2ram_db_user:oaXJfmN77ucifqpt@cluster0.ww2bovl.mongodb.net/?appName=Cluster0';
-const DB_NAME   = 'builder';
+const MONGO_URI  = process.env.MONGO_URI || 'mongodb+srv://kgr2ram_db_user:oaXJfmN77ucifqpt@cluster0.ww2bovl.mongodb.net/?appName=Cluster0';
+const DB_NAME    = 'builder';
 const COLLECTION = 'builder';
-const DOC_ID    = 'form-v1';
+const PORT       = process.env.PORT || 3000;
 
 let db;
 
@@ -20,20 +20,22 @@ async function connectDB() {
   console.log('Connected to MongoDB Atlas');
 }
 
-app.get('/api/load', async (req, res) => {
+/* ── Form routes (per session ID) ── */
+
+app.get('/api/load/:id', async (req, res) => {
   try {
-    const doc = await db.collection(COLLECTION).findOne({ _id: DOC_ID });
+    const doc = await db.collection(COLLECTION).findOne({ _id: req.params.id });
     res.json({ ok: true, data: doc ? doc.data : {} });
   } catch (e) {
     res.json({ ok: false, error: e.message });
   }
 });
 
-app.post('/api/save', async (req, res) => {
+app.post('/api/save/:id', async (req, res) => {
   try {
     const { data } = req.body;
     await db.collection(COLLECTION).updateOne(
-      { _id: DOC_ID },
+      { _id: req.params.id },
       { $set: { data, savedAt: new Date() } },
       { upsert: true }
     );
@@ -43,19 +45,54 @@ app.post('/api/save', async (req, res) => {
   }
 });
 
-app.post('/api/reset', async (req, res) => {
+app.post('/api/reset/:id', async (req, res) => {
   try {
-    await db.collection(COLLECTION).deleteOne({ _id: DOC_ID });
+    await db.collection(COLLECTION).deleteOne({ _id: req.params.id });
     res.json({ ok: true });
   } catch (e) {
     res.json({ ok: false, error: e.message });
   }
 });
 
-app.get('*', (req, res) => {
+/* ── Submissions list ── */
+
+app.get('/api/submissions', async (req, res) => {
+  try {
+    const docs = await db.collection(COLLECTION)
+      .find({}, { projection: {
+        'data.builder_name': 1,
+        'data.project_name': 1,
+        'data.email': 1,
+        'data.phone': 1,
+        savedAt: 1
+      }})
+      .sort({ savedAt: -1 })
+      .toArray();
+    res.json({ ok: true, submissions: docs });
+  } catch (e) {
+    res.json({ ok: false, error: e.message });
+  }
+});
+
+app.delete('/api/submissions/:id', async (req, res) => {
+  try {
+    await db.collection(COLLECTION).deleteOne({ _id: req.params.id });
+    res.json({ ok: true });
+  } catch (e) {
+    res.json({ ok: false, error: e.message });
+  }
+});
+
+/* ── Pages ── */
+
+app.get('/submissions', (req, res) => {
+  res.sendFile(path.join(__dirname, 'submissions.html'));
+});
+
+app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 connectDB()
-  .then(() => app.listen(3000, () => console.log('Server running at http://localhost:3000')))
+  .then(() => app.listen(PORT, () => console.log(`Server running at http://localhost:${PORT}`)))
   .catch(err => { console.error('MongoDB connection failed:', err); process.exit(1); });
